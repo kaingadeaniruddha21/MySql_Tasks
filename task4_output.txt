@@ -1,0 +1,112 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 5.1.33-community MySQL Community Server (GPL)
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql>
+mysql>
+mysql> use practice;
+Database changed
+mysql> CREATE TABLE customers
+    -> ( customer_id int NOT NULL,
+    ->   last_name char(50) NOT NULL,
+    ->   first_name char(50) NOT NULL,
+    ->   favorite_website char(50),
+    ->   CONSTRAINT customers_pk PRIMARY KEY (customer_id)
+    -> );
+ERROR 1050 (42S01): Table 'customers' already exists
+mysql>
+mysql> CREATE TABLE orders
+    -> ( order_id int NOT NULL,
+    ->   customer_id int,
+    ->   order_date date,
+    ->   CONSTRAINT orders_pk PRIMARY KEY (order_id)
+    -> );
+ERROR 1050 (42S01): Table 'orders' already exists
+mysql>
+mysql> INSERT INTO customers
+    -> (customer_id, last_name, first_name, favorite_website)
+    -> VALUES
+    -> (4000, 'Jackson', 'Joe', 'techonthenet.com');
+ERROR 1062 (23000): Duplicate entry '4000' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO customers
+    -> (customer_id, last_name, first_name, favorite_website)
+    -> VALUES
+    -> (5000, 'Smith', 'Jane', 'digminecraft.com');
+ERROR 1062 (23000): Duplicate entry '5000' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO customers
+    -> (customer_id, last_name, first_name, favorite_website)
+    -> VALUES
+    -> (6000, 'Ferguson', 'Samantha', 'bigactivities.com');
+ERROR 1062 (23000): Duplicate entry '6000' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO customers
+    -> (customer_id, last_name, first_name, favorite_website)
+    -> VALUES
+    -> (7000, 'Reynolds', 'Allen', 'checkyourmath.com');
+ERROR 1062 (23000): Duplicate entry '7000' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO customers
+    -> (customer_id, last_name, first_name, favorite_website)
+    -> VALUES
+    -> (8000, 'Anderson', 'Paige', NULL);
+ERROR 1062 (23000): Duplicate entry '8000' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO customers
+    -> (customer_id, last_name, first_name, favorite_website)
+    -> VALUES
+    -> (9000, 'Johnson', 'Derek', 'techonthenet.com');
+ERROR 1062 (23000): Duplicate entry '9000' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO orders
+    -> (order_id, customer_id, order_date)
+    -> VALUES
+    -> (1,7000,'2016/04/18');
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO orders
+    -> (order_id, customer_id, order_date)
+    -> VALUES
+    -> (2,5000,'2016/04/18');
+ERROR 1062 (23000): Duplicate entry '2' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO orders
+    -> (order_id, customer_id, order_date)
+    -> VALUES
+    -> (3,8000,'2016/04/19');
+ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO orders
+    -> (order_id, customer_id, order_date)
+    -> VALUES
+    -> (4,4000,'2016/04/20');
+ERROR 1062 (23000): Duplicate entry '4' for key 'PRIMARY'
+mysql>
+mysql> INSERT INTO orders
+    -> (order_id, customer_id, order_date)
+    -> VALUES
+    -> (5,null,'2016/05/01');
+ERROR 1062 (23000): Duplicate entry '5' for key 'PRIMARY'
+mysql>
+mysql> SELECT customer_id, last_name
+    -> FROM customers
+    -> WHERE EXISTS
+    ->   ( SELECT orders.customer_id
+    ->     FROM orders
+    ->     WHERE orders.customer_id = customers.customer_id )
+    -> ORDER BY last_name ASC, customer_id DESC;
++-------------+-----------+
+| customer_id | last_name |
++-------------+-----------+
+|        8000 | Anderson  |
+|        4000 | Jackson   |
+|        7000 | Reynolds  |
+|        5000 | Smith     |
++-------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql>

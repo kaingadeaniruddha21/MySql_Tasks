@@ -1,0 +1,90 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.1.33-community MySQL Community Server (GPL)
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> use practice;
+Database changed
+mysql> CREATE TABLE suppliers
+    -> ( supplier_id int NOT NULL,
+    ->  supplier_name char(50) NOT NULL,
+    ->  city char(50),
+    ->  state char(25),
+    ->  CONSTRAINT suppliers_pk PRIMARY KEY (supplier_id)
+    -> );
+ERROR 1050 (42S01): Table 'suppliers' already exists
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (100, 'Microsoft', 'Redmond', 'Washington');
+ERROR 1062 (23000): Duplicate entry '100' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (200, 'Google', 'Mountain View', 'California');
+ERROR 1062 (23000): Duplicate entry '200' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (300, 'Oracle', 'Redwood City', 'California');
+ERROR 1062 (23000): Duplicate entry '300' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (400, 'Kimberly-Clark', 'Irving', 'Texas');
+ERROR 1062 (23000): Duplicate entry '400' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (500, 'Tyson Foods', 'Springdale', 'Arkansas');
+ERROR 1062 (23000): Duplicate entry '500' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (600, 'SC Johnson', 'Racine', 'Wisconsin');
+ERROR 1062 (23000): Duplicate entry '600' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (700, 'Dole Food Company', 'Westlake Village', 'California');
+ERROR 1062 (23000): Duplicate entry '700' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (800, 'Flowers Foods', 'Thomasville', 'Georgia');
+ERROR 1062 (23000): Duplicate entry '800' for key 'PRIMARY'
+mysql> INSERT INTO suppliers
+    -> (supplier_id, supplier_name, city, state)
+    -> VALUES
+    -> (900, 'Electronic Arts', 'Redwood City', 'California');
+ERROR 1062 (23000): Duplicate entry '900' for key 'PRIMARY'
+mysql>  select * from suppliers;
++-------------+-------------------+------------------+------------+
+| supplier_id | supplier_name     | city             | state      |
++-------------+-------------------+------------------+------------+
+|         100 | Microsoft         | Redmond          | Washington |
+|         200 | Google            | Mountain View    | California |
+|         300 | Oracle            | Redwood City     | California |
+|         400 | Kimberly-Clark    | Irving           | Texas      |
+|         500 | Tyson Foods       | Springdale       | Arkansas   |
+|         600 | SC Johnson        | Racine           | Wisconsin  |
+|         700 | Dole Food Company | Westlake Village | California |
+|         800 | Flowers Foods     | Thomasville      | Georgia    |
+|         900 | Electronic Arts   | Redwood City     | California |
++-------------+-------------------+------------------+------------+
+9 rows in set (0.00 sec)
+
+mysql>  select distinct city from suppliers where state= 'California' order by c
+ity desc;
++------------------+
+| city             |
++------------------+
+| Westlake Village |
+| Redwood City     |
+| Mountain View    |
++------------------+
+3 rows in set (0.00 sec)
+
+mysql>
